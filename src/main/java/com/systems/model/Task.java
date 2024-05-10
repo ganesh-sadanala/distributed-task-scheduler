@@ -2,6 +2,7 @@ package com.systems.model;
 
 public class Task {
     private String id;
+    private TaskType type; // Enum to represent task type
     private int priority;
     private String status;
     private String payload;
@@ -10,8 +11,9 @@ public class Task {
 
     }
 
-    public Task(String id, int priority, String status, String payload) {
+    public Task(String id, TaskType type, int priority, String status, String payload) {
         this.id = id;
+        this.type = type;
         this.priority = priority;
         this.status = status;
         this.payload = payload;
@@ -25,6 +27,14 @@ public class Task {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public TaskType getType() {
+        return type;
+    }
+
+    public void setType(TaskType type) {
+        this.type = type;
     }
 
     public int getPriority() {
@@ -51,14 +61,16 @@ public class Task {
         this.payload = payload;
     }
 
+
+
     @Override
     public String toString() {
         return "Task{" +
                 "id='" + id + '\'' +
+                ", type=" + type +
                 ", priority=" + priority +
                 ", status='" + status + '\'' +
                 ", payload='" + payload + '\'' +
                 '}';
     }
 }
-

@@ -13,8 +13,6 @@ public class TaskSubscriber implements MessageListener {
 
     private static final String TASK_CHANNEL = "task-channel";
 
-
-
     @Autowired
     private TaskExecutionService taskExecutionService;
 

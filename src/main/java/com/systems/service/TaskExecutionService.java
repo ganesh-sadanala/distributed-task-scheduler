@@ -27,6 +27,11 @@ public class TaskExecutionService {
         if (strategy != null) {
             try {
                 strategy.executeTask(taskId);
+
+                // Simulate task failure
+                if (Math.random() < 0.5) {
+                    throw new RuntimeException("Task execution failed for task: " + taskId);
+                }
             } catch (Exception e) {
                 // Handle task execution failure
                 System.out.println("Failed to execute task: " + taskId);
@@ -35,11 +40,6 @@ public class TaskExecutionService {
         } else {
             // Handle unknown task type
             System.out.println("Unknown task type: " + taskType);
-        }
-
-        // Simulate task failure
-        if (Math.random() < 0.5) {
-            throw new RuntimeException("Task execution failed for task: " + taskId);
         }
     }
 

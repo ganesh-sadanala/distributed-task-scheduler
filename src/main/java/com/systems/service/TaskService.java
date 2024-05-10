@@ -19,12 +19,18 @@ public class TaskService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    @Autowired
+    TaskDistributor taskDistributor;
+
     public String submitTask(Task task) {
-        String taskId = UUID.randomUUID().toString();
+        String taskId = task.getType() + "-" + UUID.randomUUID().toString();
         String taskKey = "task:" + taskId;
 
         stringRedisTemplate.opsForHash().put(taskKey, "priority", String.valueOf(task.getPriority()));
         stringRedisTemplate.opsForHash().put(taskKey, "payload", task.getPayload());
+
+        // After storing the task in Redis, call TaskDistributor to distribute the task
+        taskDistributor.distributeTask(taskId);
 
         return taskId;
     }
