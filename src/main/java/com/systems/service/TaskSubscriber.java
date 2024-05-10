@@ -13,8 +13,10 @@ public class TaskSubscriber implements MessageListener {
 
     private static final String TASK_CHANNEL = "task-channel";
 
+
+
     @Autowired
-    private Map<String, TaskExecutionStrategy> taskExecutionStrategies;
+    private TaskExecutionService taskExecutionService;
 
     @Override
     public void onMessage(Message message, byte[] pattern) {
@@ -22,18 +24,8 @@ public class TaskSubscriber implements MessageListener {
         String taskId = new String(message.getBody());
         System.out.println("Received task ID: " + taskId);
 
-        // Extract task type from taskId (assuming taskId format: typeX-taskId)
-        String taskType = taskId.split("-")[0];
-
-        // process the task
-        // Get appropriate strategy based on task type and execute task
-        TaskExecutionStrategy strategy = taskExecutionStrategies.get(taskType);
-        if (strategy != null) {
-            strategy.executeTask(taskId);
-        } else {
-            // Handle unknown task type
-            System.out.println("Unknown task type: " + taskType);
-        }
+        // Execute task using TaskExecutionService with Circuit Breaker
+        taskExecutionService.executeTask(taskId);
     }
 }
 
