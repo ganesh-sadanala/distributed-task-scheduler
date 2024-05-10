@@ -32,6 +32,21 @@
       <version>1.7.0</version>
     </dependency>
 
+    <!-- SLF4J API -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <!-- Logback (SLF4J implementation) -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
+
+
     <!-- Spring Boot Starter Test for unit and integration testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

@@ -2,6 +2,8 @@ package com.systems.service;
 
 import com.systems.strategy.TaskExecutionStrategy;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +11,7 @@ import java.util.Map;
 
 @Component
 public class TaskExecutionService {
+    private static final Logger logger = LoggerFactory.getLogger(TaskExecutionService.class);
 
     @Autowired
     private Map<String, TaskExecutionStrategy> taskExecutionStrategies;
@@ -16,7 +19,7 @@ public class TaskExecutionService {
     @CircuitBreaker(name = "taskExecution", fallbackMethod = "handleTaskExecutionFailure")
     public void executeTask(String taskId) {
         // Execute task logic here
-        System.out.println("Executing task: " + taskId);
+        logger.info("Executing task: {}", taskId);
 
         // Extract task type from taskId (assuming taskId format: typeX-taskId)
         String taskType = taskId.split("-")[0];
@@ -34,12 +37,11 @@ public class TaskExecutionService {
                 }
             } catch (Exception e) {
                 // Handle task execution failure
-                System.out.println("Failed to execute task: " + taskId);
-                // Log or perform other error handling actions
+                logger.error("Failed to execute task: {}", taskId, e);
             }
         } else {
             // Handle unknown task type
-            System.out.println("Unknown task type: " + taskType);
+            logger.warn("Unknown task type: {}", taskType);
         }
     }
 
