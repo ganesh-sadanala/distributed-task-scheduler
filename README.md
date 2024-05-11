@@ -9,12 +9,13 @@
 **Redis Cluster set up**
 - Multiple docker containers represents distributed systems using `bridge` network.
 - Create docker network: ```docker network create redis-net```
-- Create Redis containers (# nodes = 3)
-  ```
-     docker run -d --name redis1 --net redis-net redis redis-server --cluster-enabled yes 
-     docker run -d --name redis2 --net redis-net redis redis-server --cluster-enabled yes
-     docker run -d --name redis3 --net redis-net redis redis-server --cluster-enabled yes
-  ```
+- Create Redis containers (# nodes = 3) with cluster enabled and port mapping for communication from external service.
+- Docker containers typically use private IP addresses within their network. The port mappings allow you to access services running inside the containers from your host machine's localhost.
+```
+docker run -d --name redis1 --net redis-net -p 6379:6379 redis redis-server --cluster-enabled yes
+docker run -d --name redis2 --net redis-net -p 6380:6379 redis redis-server --cluster-enabled yes
+docker run -d --name redis3 --net redis-net -p 6381:6379 redis redis-server --cluster-enabled yes
+```
 - Configure Redis cluster. In my case: 172.18.0.2, 172.18.0.3 and 172.18.0.4
 ```
 docker exec -it redis1 sh -c "redis-cli cluster meet <ip-of-redis2> 6379"
@@ -30,3 +31,9 @@ docker exec -it redis3 sh -c "redis-cli cluster meet <ip-of-redis2> 6379"
 ```
 docker exec -it redis1 sh -c "redis-cli --cluster create <ip-of-redis1>:6379 <ip-of-redis2>:6379 <ip-of-redis3>:6379 --cluster-replicas 0"
 ```
+- To inspect network and docker containers
+```
+docker container inspect CONTAINER_ID
+docker network inspect NETWORK_ID
+```
+
