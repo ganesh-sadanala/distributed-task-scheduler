@@ -31,6 +31,33 @@ services:
     ports:
       - "6381:6379"
     command: redis-server --port 6379 --slaveof redis1 6379
+    
+  sentinel1:
+    image: redis
+    ports:
+      - "26379:26379"
+    command: >
+      redis-sentinel /usr/local/etc/sentinel.conf
+    volumes:
+      - ./sentinel.conf:/usr/local/etc/sentinel.conf
+
+  sentinel2:
+    image: redis
+    ports:
+      - "26380:26379"
+    command: >
+      redis-sentinel /usr/local/etc/sentinel.conf
+    volumes:
+      - ./sentinel.conf:/usr/local/etc/sentinel.conf
+
+  sentinel3:
+    image: redis
+    ports:
+      - "26381:26379"
+    command: >
+      redis-sentinel /usr/local/etc/sentinel.conf
+    volumes:
+      - ./sentinel.conf:/usr/local/etc/sentinel.conf
 ```
 
 - `redis1` acts as master. The data is replicated in slave containers.
@@ -52,3 +79,6 @@ services:
 ![api-tasks-response.png](src%2Fmain%2Fresources%2Fapi-tasks-response.png)
 - Redis state change:
 ![redis-api-tasks-state.png](src%2Fmain%2Fresources%2Fredis-api-tasks-state.png)
+
+
+
