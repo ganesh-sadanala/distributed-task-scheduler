@@ -1,6 +1,6 @@
 **Project**
 - Distributed Task Scheduler using Redis
-- Build a distributed task scheduler using Java and Spring Boot that utilizes Redis as a distributed cache.
+- Build a distributed task scheduler using Java and Spring Boot that utilizes Redis as a distributed cache and pub/sub.
 - Tasks can be submitted to the scheduler, and it distributes the tasks across multiple nodes in a Redis cluster for parallel execution.
 - Implement features like task prioritization, task persistence, and fault tolerance using Redis features like Pub/Sub, Lua scripting, and data structures.
 - Utilize Circuit Break pattern to prevent cascading and recurrent failures.
