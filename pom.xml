@@ -46,6 +46,15 @@
       <version>${logback.version}</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <version>3.3.0</version>
+      <scope>test</scope>
+    </dependency>
+
+
 
     <!-- Spring Boot Starter Test for unit and integration testing -->
     <dependency>
